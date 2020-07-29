@@ -1,15 +1,18 @@
 # https://travis-ci.org/soimort/you-get
 language: python
 python:
-  - "3.2"
-  - "3.3"
   - "3.4"
   - "3.5"
   - "3.6"
-  - "nightly"
+  - "3.7"
+  - "3.8"
+  #- "nightly"  (flake8 not working in python 3.9 yet, module 'ast' has no attribute 'AugLoad')
   - "pypy3"
+before_install:
+  - pip install flake8
+before_script:
+  - flake8 . --count --select=E9,F63,F72,F82 --show-source --statistics
 script: make test
-sudo: false
 notifications:
   webhooks:
     urls:

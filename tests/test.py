@@ -6,16 +6,16 @@ from you_get.extractors import (
     imgur,
     magisto,
     youtube,
-    yixia,
+    missevan,
+    acfun,
     bilibili,
-    douyin,
+    soundcloud
 )
 
 
 class YouGetTests(unittest.TestCase):
     def test_imgur(self):
         imgur.download('http://imgur.com/WVLk5nD', info_only=True)
-        imgur.download('http://imgur.com/gallery/WVLk5nD', info_only=True)
 
     def test_magisto(self):
         magisto.download(
@@ -32,21 +32,30 @@ class YouGetTests(unittest.TestCase):
             'http://www.youtube.com/attribution_link?u=/watch?v%3DldAKIzq7bvs%26feature%3Dshare',  # noqa
             info_only=True
         )
-
-    def test_yixia(self):
-        yixia.download(
-            'http://m.miaopai.com/show/channel/vlvreCo4OZiNdk5Jn1WvdopmAvdIJwi8',  # noqa
-            info_only=True
+        youtube.download(
+            'https://www.youtube.com/watch?v=Fpr4fQSh1cc', info_only=True
         )
 
-    def test_bilibili(self):
+    def test_acfun(self):
+        acfun.download('https://www.acfun.cn/v/ac11701912', info_only=True)
+
+    def test_bilibil(self):
         bilibili.download(
-            'https://www.bilibili.com/video/av16907446/', info_only=True
+            "https://www.bilibili.com/watchlater/#/BV1PE411q7mZ/p6", info_only=True
         )
         bilibili.download(
-            'https://www.bilibili.com/video/av13228063/', info_only=True
+            "https://www.bilibili.com/watchlater/#/av74906671/p6", info_only=True
         )
 
+    def test_soundcloud(self):
+        ## single song
+        soundcloud.download(
+            'https://soundcloud.com/keiny-pham/impure-bird', info_only=True
+        )
+        ## playlist
+        soundcloud.download(
+            'https://soundcloud.com/anthony-flieger/sets/cytus', info_only=True
+        )
 
 if __name__ == '__main__':
     unittest.main()

@@ -12,6 +12,11 @@ def output(video_extractor, pretty_print=True):
     out['site'] = ve.name
     out['streams'] = ve.streams
     try:
+        if ve.dash_streams:
+            out['streams'].update(ve.dash_streams)
+    except AttributeError:
+        pass
+    try:
         if ve.audiolang:
             out['audiolang'] = ve.audiolang
     except AttributeError:
@@ -24,7 +29,7 @@ def output(video_extractor, pretty_print=True):
     if extra:
         out["extra"] = extra
     if pretty_print:
-        print(json.dumps(out, indent=4, sort_keys=True, ensure_ascii=False))
+        print(json.dumps(out, indent=4, ensure_ascii=False))
     else:
         print(json.dumps(out))
 
@@ -59,4 +64,3 @@ def download_urls(urls=None, title=None, ext=None, total_size=None, refer=None):
     ve.streams = {}
     ve.streams['__default__'] = stream
     output(ve)
-

@@ -25,10 +25,10 @@ def coub_download(url, output_dir='.', merge=True, info_only=False, **kwargs):
                 loop_file_path = get_loop_file_path(title, output_dir)
                 single_file_path = audio_file_path
                 if audio_duration > video_duration:
-                    write_loop_file(int(audio_duration / video_duration), loop_file_path, video_file_name)
+                    write_loop_file(round(audio_duration / video_duration), loop_file_path, video_file_name)
                 else:
                     single_file_path = audio_file_path
-                    write_loop_file(int(video_duration / audio_duration), loop_file_path, audio_file_name)
+                    write_loop_file(round(video_duration / audio_duration), loop_file_path, audio_file_name)
 
                 ffmpeg.ffmpeg_concat_audio_and_video([loop_file_path, single_file_path], title + "_full", "mp4")
                 cleanup_files([video_file_path, audio_file_path, loop_file_path])
@@ -79,7 +79,7 @@ def get_title_and_urls(json_data):
 
 
 def get_coub_data(html):
-    coub_data = r1(r'<script id=\'coubPageCoubJson\' type=\'text/json\'>([^<]+)</script>', html)
+    coub_data = r1(r'<script id=\'coubPageCoubJson\' type=\'text/json\'>([\w\W]+?(?=</script>))</script>', html)
     json_data = json.loads(coub_data)
     return json_data
 
